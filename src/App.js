@@ -27,6 +27,10 @@ class App extends Component {
       .startGame(this.id, this.props.gameId);
   }
 
+  endTurn() {
+    this.props.socketClient.endTurn(this.props.gameId, this.state);
+  }
+
   // Socket-client handlers
   handleStartGame(msg) {
     this.setState({
@@ -46,10 +50,7 @@ class App extends Component {
       });
   }
 
-  endTurn() {
-    this.props.socketClient.endTurn(this.props.gameId, this.state);
-  }
-
+  // Event handlers
   handleMarketClick(i) {
     this.setState((state, props) => {
       const market = state.market.slice();
