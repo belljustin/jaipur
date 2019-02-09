@@ -4,7 +4,8 @@ import Button from '../components/Button'
 
 const mapStateToProps = state => {
   return {
-    name: 'take'
+    name: 'take',
+    disabled: !state.yourTurn
   }
 }
 

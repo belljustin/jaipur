@@ -1,17 +1,19 @@
 import { connect } from 'react-redux'
-import { sellCards } from '../actions'
+import { sellCardsCreator, endTurn } from '../actions'
 import Button from '../components/Button'
 
 const mapStateToProps = state => {
   return {
-    name: 'sell'
+    name: 'sell',
+    disabled: !state.yourTurn
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     onClick: () => {
-      dispatch(sellCards())
+      sellCardsCreator(dispatch)
+        .then(() => dispatch(endTurn()))
     }
   }
 }

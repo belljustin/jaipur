@@ -5,6 +5,8 @@ import {
   startGame,
   LIST_GAMES,
   listGames,
+  UPDATE_GAME,
+  updateGame,
 } from './actions';
 
 class SocketClient {
@@ -21,6 +23,10 @@ class SocketClient {
     this.socket.on(LIST_GAMES, (data) => {
       dispatch(listGames(data.games));
     })
+
+    this.socket.on(UPDATE_GAME, (data) => {
+      dispatch(updateGame(data.market));
+    })
   }
 
   joinGame(id) {
@@ -29,6 +35,13 @@ class SocketClient {
 
   listGames() {
     this.socket.emit(LIST_GAMES);
+  }
+
+  endTurn(hand, market) {
+    this.socket.emit('END_TURN', {
+      hand,
+      market
+    });
   }
 }
 
