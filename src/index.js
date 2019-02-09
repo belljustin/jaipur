@@ -1,24 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import * as serviceWorker from './serviceWorker';
 
-import App from './App';
+import Root from './Root'
 import jaipur from './reducers'
-import SocketClient from './client'
 
 const store = createStore(jaipur);
-const socketClient = new SocketClient(
-  'localhost:3001',
-  '/test',
-  store.dispatch
-)
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <Root store={store} />,
   document.getElementById('root')
 );
 

@@ -7,13 +7,7 @@ import {
 } from '../actions'
 
 const initialState = {
-  market: [{
-    'name': 'silver',
-    'selected': false
-  }, {
-    'name': 'gold',
-    'selected': false
-  }],
+  market: [],
   hand: [],
   yourTurn: false
 }
@@ -31,7 +25,8 @@ function jaipur(state, action) {
 
   switch (action.type) {
     case START_GAME:
-      return Object.assign({}, update(action.market, action.hand, action.yourTurn));
+      return Object.assign({}, state,
+        update(action.market, action.hand, action.yourTurn));
     case SELECT_HAND_CARD:
       return Object.assign({}, state, {
         hand: selectCard(state.hand, action.index)
@@ -41,13 +36,10 @@ function jaipur(state, action) {
         market: selectCard(state.market, action.index)
       })
     case TAKE_CARDS:
-      return Object.assign({}, state, {
-        ...takeCards(state.market, state.hand)
-      })
+      return Object.assign({}, state,
+        takeCards(state.market, state.hand))
     case SELL_CARDS:
-      return Object.assign({}, state, {
-        ...sellCards(state.hand)
-      })
+      return Object.assign({}, state, sellCards(state.hand))
     default:
       return state
   }

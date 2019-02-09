@@ -14,18 +14,12 @@ class SocketClient {
 
     this.socket.on(START_GAME, (data) => {
       let action = startGame(data.market, data.hand, data.yourTurn)
-      this.dispatch(action);
+      dispatch(action);
     })
   }
 
-  emitAction(actionCreator) {
-    return (...args) => {
-      const result = actionCreator.apply(this, args)
-      this.socket.emit(result.type, {
-        ...result
-      })
-      return result
-    }
+  joinGame(id) {
+    this.socket.emit('JOIN', id);
   }
 }
 
