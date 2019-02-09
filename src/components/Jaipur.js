@@ -24,7 +24,7 @@ export class Jaipur extends React.Component {
 
   componentWillMount() {
     const gameId = this.props.gameId;
-    this.props.client.joinGame(gameId);
+    this.props.joinGame(gameId);
   }
 }
 

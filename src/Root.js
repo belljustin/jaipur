@@ -5,18 +5,27 @@ import { Provider } from 'react-redux'
 
 import Jaipur from './containers/Jaipur'
 import Lobby from './containers/Lobby'
+import SocketClient from './client'
 
-const Root = ({ store }) => (
-  <Provider store={store}>
-    <Router>
-      <div>
-        <Route exact path="/"
-          render={(props) => <Lobby gameIds={[]} />} />
-        <Route path="/games/:id" component={Jaipur} />
-      </div>
-    </Router>
-  </Provider>
-)
+const ws = 'localhost:3001'
+const wsPath = '/test'
+
+const Root = ({ store }) => {
+  const client = new SocketClient(ws, wsPath, store.dispatch);
+
+  return (
+    <Provider store={store}>
+      <Router>
+        <div>
+          <Route exact path="/"
+            render={(props) => <Lobby gameIds={[]} client={client} />} />
+          <Route path="/games/:id"
+            render={(props) => <Jaipur {...props} client={client} />} />
+        </div>
+      </Router>
+    </Provider>
+  )
+}
 
 Root.propTypes = {
   store: PropTypes.object.isRequired

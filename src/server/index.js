@@ -35,7 +35,13 @@ console.log('Started websocket server on', server.address(), PATH);
 io.on('connection', function(socket) {
   console.log('client connected');
   socket.emit('LIST_GAMES', {
-    games: games.keys
+    games: Array.from(games.keys())
+  })
+
+  socket.on('LIST_GAMES', () => {
+    socket.emit('LIST_GAMES', {
+      games: Array.from(games.keys())
+    })
   })
 
   socket.on('JOIN', (id) => {

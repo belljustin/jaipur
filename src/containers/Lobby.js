@@ -4,13 +4,19 @@ import { Lobby as LobbyComponent } from '../components/Lobby'
 
 const mapStateToProps = (state) => {
   return {
-    gameId: []
+    games: state.games
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    listGames: () => ownProps.client.listGames()
   }
 }
 
 const Lobby = connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(LobbyComponent)
 
 

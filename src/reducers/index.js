@@ -4,9 +4,11 @@ import {
   TAKE_CARDS,
   SELL_CARDS,
   START_GAME,
+  LIST_GAMES,
 } from '../actions'
 
 const initialState = {
+  games: [],
   market: [],
   hand: [],
   yourTurn: false
@@ -27,6 +29,10 @@ function jaipur(state, action) {
     case START_GAME:
       return Object.assign({}, state,
         update(action.market, action.hand, action.yourTurn));
+    case LIST_GAMES:
+      return Object.assign({}, state, {
+        games: action.games
+      })
     case SELECT_HAND_CARD:
       return Object.assign({}, state, {
         hand: selectCard(state.hand, action.index)

@@ -30,6 +30,7 @@ export function sellCards() {
 }
 
 export const START_GAME = 'START_GAME'
+export const LIST_GAMES = 'LIST_GAMES'
 
 export function startGame(market, hand, yourTurn) {
   return {
@@ -37,5 +38,12 @@ export function startGame(market, hand, yourTurn) {
     market,
     hand,
     yourTurn
+  }
+}
+
+export function listGames(games) {
+  return {
+    type: LIST_GAMES,
+    games
   }
 }
