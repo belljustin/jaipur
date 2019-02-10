@@ -12,7 +12,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onClick: () => {
-      dispatch(sellCards)
+      dispatch(sellCards())
     }
   }
 }

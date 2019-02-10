@@ -29,17 +29,7 @@ export function sellCards() {
   }
 }
 
-export function sellCardsCreator(dispatch) {
-  return new Promise((resolve, reject) => {
-    dispatch(sellCards());
-    resolve();
-  })
-}
-
 export const START_GAME = 'START_GAME'
-export const LIST_GAMES = 'LIST_GAMES'
-export const UPDATE_GAME = 'UPDATE_GAME'
-
 export function startGame(market, hand, yourTurn) {
   return {
     type: START_GAME,
@@ -49,6 +39,7 @@ export function startGame(market, hand, yourTurn) {
   }
 }
 
+export const LIST_GAMES = 'LIST_GAMES'
 export function listGames(games) {
   return {
     type: LIST_GAMES,
@@ -56,6 +47,7 @@ export function listGames(games) {
   }
 }
 
+export const UPDATE_GAME = 'UPDATE_GAME'
 export function updateGame(market) {
   return {
     type: UPDATE_GAME,
