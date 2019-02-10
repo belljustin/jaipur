@@ -50,14 +50,22 @@ io.on('connection', function(socket) {
   })
 })
 
+function addGame(id) {
+  game = new Game();
+  games.set(id, game);
+  io.emit('LIST_GAMES', {
+    games: Array.from(games.keys())
+  })
+  return game;
+}
+
 
 function joinGame(socket, id) {
   let playerState = {}
 
   let game = games.get(id);
   if (game === undefined) {
-    game = new Game();
-    games.set(id, game); 
+    game = addGame(id);
     playerState = {
       market: game.market,
       hand: game.hands[0],

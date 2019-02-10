@@ -39,7 +39,6 @@ export function sellCardsCreator(dispatch) {
 export const START_GAME = 'START_GAME'
 export const LIST_GAMES = 'LIST_GAMES'
 export const UPDATE_GAME = 'UPDATE_GAME'
-export const END_TURN = 'END_TURN'
 
 export function startGame(market, hand, yourTurn) {
   return {
@@ -61,11 +60,5 @@ export function updateGame(market) {
   return {
     type: UPDATE_GAME,
     market
-  }
-}
-
-export function endTurn() {
-  return {
-    type: END_TURN
   }
 }

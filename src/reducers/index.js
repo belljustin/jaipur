@@ -4,8 +4,7 @@ import {
   TAKE_CARDS,
   SELL_CARDS,
   START_GAME,
-  LIST_GAMES,
-  END_TURN
+  LIST_GAMES
 } from '../actions'
 
 const initialState = {

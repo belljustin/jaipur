@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { sellCardsCreator, endTurn } from '../actions'
+import { sellCards } from '../actions'
 import Button from '../components/Button'
 
 const mapStateToProps = state => {
@@ -9,11 +9,10 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onClick: () => {
-      sellCardsCreator(dispatch)
-        .then(() => dispatch(endTurn()))
+      dispatch(sellCards)
     }
   }
 }
