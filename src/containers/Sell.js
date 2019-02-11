@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { sellCards } from '../actions'
+import { sellCards } from '../actions/websockets'
 import Button from '../components/Button'
 
 const mapStateToProps = state => {

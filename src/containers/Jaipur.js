@@ -6,6 +6,7 @@ import Market from '../containers/Market.js';
 import Hand from '../containers/Hand.js';
 import Take from '../containers/Take.js';
 import Sell from '../containers/Sell.js';
+import { joinGame } from '../actions/websockets';
 
 class Component extends React.Component {
   render() {
@@ -24,19 +25,17 @@ class Component extends React.Component {
 
   componentWillMount() {
     const gameId = this.props.gameId;
-    this.props.client.joinGame(gameId);
+    joinGame(gameId);
   }
 }
 
 Component.propTypes = {
   gameId: PropTypes.string.isRequired,
-  client: PropTypes.object.isRequired, 
 }
 
 const mapStateToProps = (state, ownProps) => {
   return {
     gameId: ownProps.match.params.id,
-    client: ownProps.client
   }
 }
 

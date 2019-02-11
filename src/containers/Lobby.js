@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 
 import { Lobby as LobbyComponent } from '../components/Lobby'
+import { listGames } from '../actions/websockets'
 
 const mapStateToProps = (state) => {
   return {
@@ -10,7 +11,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    listGames: () => ownProps.client.listGames()
+    listGames: () => listGames()
   }
 }
 

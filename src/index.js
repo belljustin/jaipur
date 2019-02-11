@@ -1,12 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux';
+import thunkMiddleware from 'redux-thunk';
 import * as serviceWorker from './serviceWorker';
 
 import Root from './Root'
 import jaipur from './reducers'
 
-const store = createStore(jaipur);
+import { init as websocketInit, emit} from './actions/websockets'
+
+const middleware = [
+  thunkMiddleware.withExtraArgument({emit})
+];
+
+const store = createStore(
+  jaipur,
+  applyMiddleware(
+    ...middleware
+  )
+);
+websocketInit(store);
 
 ReactDOM.render(
   <Root store={store} />,

@@ -2,14 +2,17 @@ import {
   SELECT_HAND_CARD, 
   SELECT_MARKET_CARD,
   TAKE_CARDS,
-  SELL_CARDS,
   START_GAME,
   LIST_GAMES,
-  UPDATE_GAME
 } from '../actions'
+
+import {
+  SELL_CARDS,
+} from '../actions/websockets'
 
 const initialState = {
   games: [],
+  gameId: null,
   market: [],
   hand: [],
   yourTurn: false
@@ -47,8 +50,6 @@ function jaipur(state, action) {
         takeCards(state.market, state.hand))
     case SELL_CARDS:
       return Object.assign({}, state, sellCards(state.hand))
-    case UPDATE_GAME:
-      return Object.assign({}, state, { market: action.market })
     default:
       return state
   }

@@ -48,6 +48,11 @@ io.on('connection', function(socket) {
     socket.join(id);
     joinGame(socket, id);
   })
+
+  socket.on('END_TURN', (market) => {
+    const n = MARKET_SIZE - market.length;
+    _market = this.dekc
+  })
 })
 
 function addGame(id) {
@@ -67,6 +72,7 @@ function joinGame(socket, id) {
   if (game === undefined) {
     game = addGame(id);
     playerState = {
+      gameId: id,
       market: game.market,
       hand: game.hands[0],
       yourTurn: true
