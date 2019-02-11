@@ -1,13 +1,14 @@
 import { 
   SELECT_HAND_CARD, 
   SELECT_MARKET_CARD,
-  TAKE_CARDS,
-  START_GAME,
-  LIST_GAMES,
 } from '../actions'
 
 import {
+  START_GAME,
+  LIST_GAMES,
   SELL_CARDS,
+  TAKE_CARDS,
+  UPDATE_GAME,
 } from '../actions/websockets'
 
 const initialState = {
@@ -31,11 +32,20 @@ function jaipur(state, action) {
 
   switch (action.type) {
     case START_GAME:
-      return Object.assign({}, state,
-        update(action.market, action.hand, action.yourTurn));
+      return Object.assign({}, state,{
+        gameId: action.gameId,
+        market: action.market,
+        hand: action.hand,
+        yourTurn: action.yourTurn
+      });
     case LIST_GAMES:
       return Object.assign({}, state, {
         games: action.games
+      })
+    case UPDATE_GAME:
+      return Object.assign({}, state, {
+        market: action.market,
+        yourTurn: !state.yourTurn
       })
     case SELECT_HAND_CARD:
       return Object.assign({}, state, {
@@ -75,7 +85,7 @@ function takeCards(market, hand) {
   const _hand = split(hand, (h) => h.selected);
   return {
     market: _market.unsplit.concat(_hand.split),
-    hand: _hand.unsplit.concat(_market.split)
+    hand: _hand.unsplit.concat(_market.split),
   }
 }
 

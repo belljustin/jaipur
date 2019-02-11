@@ -49,9 +49,20 @@ io.on('connection', function(socket) {
     joinGame(socket, id);
   })
 
-  socket.on('END_TURN', (market) => {
-    const n = MARKET_SIZE - market.length;
-    _market = this.dekc
+  socket.on('END_TURN', (data) => {
+    let market = data.market;
+    let game = games.get(data.id);
+
+    const n = MARKET_SIZE - data.market.length;
+    if (n > 0) {
+      market = data.market.concat(game.deck.deal(n))
+    }
+
+    game.market = market;
+    game.turn++;
+    io.in(data.id).emit('UPDATE_GAME', {
+      market
+    });
   })
 })
 
@@ -80,6 +91,7 @@ function joinGame(socket, id) {
     console.log('Player 1 started game ' + id)
   } else {
     playerState = {
+      gameId: id,
       market: game.market,
       hand: game.hands[1],
       yourTurn: (game.turn % 2 === 1)
