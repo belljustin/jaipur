@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 
-import Market from '../containers/Market.js';
-import Hand from '../containers/Hand.js';
-import Take from '../containers/Take.js';
-import Sell from '../containers/Sell.js';
+import Market from '../containers/Market';
+import Hand from '../containers/Hand';
+import Take from '../containers/Take';
+import Sell from '../containers/Sell';
+import Tokens from '../containers/Tokens';
 import { joinGame } from '../actions/websockets';
 
 class Component extends React.Component {
@@ -19,6 +20,7 @@ class Component extends React.Component {
         <Take />
         <Sell />
         <h2>Tokens</h2>
+        <Tokens />
       </div>
     )
   }

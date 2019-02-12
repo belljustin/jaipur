@@ -16,6 +16,15 @@ const initialState = {
   gameId: null,
   market: [],
   hand: [],
+  tokenTypes: ['red', 'gold', 'silver', 'pink', 'green', 'brown'],
+  tokens: [
+    [5, 5, 5, 7, 7],
+    [5, 5, 5, 6, 6],
+    [5, 5, 5, 5, 5],
+    [1, 1, 2, 2, 3, 3, 5],
+    [1, 1, 2, 2, 3, 3, 5],
+    [1, 1, 1, 1, 1, 2, 3, 4]
+  ],
   yourTurn: false
 }
 
@@ -32,7 +41,7 @@ function jaipur(state, action) {
 
   switch (action.type) {
     case START_GAME:
-      return Object.assign({}, state,{
+      return Object.assign({}, state, {
         gameId: action.gameId,
         market: action.market,
         hand: action.hand,
@@ -63,14 +72,6 @@ function jaipur(state, action) {
     default:
       return state
   }
-}
-
-function update(market, hand, yourTurn) {
-  return {
-    market: market.map(c => makeCard(c.name, false)),
-    hand: hand.map(c => makeCard(c.name, false)),
-    yourTurn: yourTurn
-  };
 }
 
 function selectCard(cards, index) {

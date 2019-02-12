@@ -1,14 +1,15 @@
 module.exports = class Deck {
   constructor() {
-    this.cards = Array(40).fill("Diamond")
-      .concat(Array(9).fill("Ruby"))
-      .concat(Array(3).fill("Camel"));
+    this.cards = Array(3).fill("red")
+      .concat(Array(1).fill("silver"))
+      .concat(Array(5).fill("red"))
+      .concat(Array(3).fill("special"));
   }
 
   deal(n) {
     const cards = this.cards.slice(-n)
       .map(c => makeCard(c));
-    this.cards = this.cards.slice(0, n);
+    this.cards = this.cards.slice(0, -n);
     return cards;
   }
 };

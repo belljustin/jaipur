@@ -2,7 +2,7 @@ const http = require('http');
 
 const Deck = require('./Deck.js');
 
-const PATH = '/test';
+const PATH = '/jaipur';
 const MARKET_SIZE = 5;
 const INIT_HAND_SIZE = 5;
 
@@ -15,7 +15,7 @@ class Game {
     this.market = this.deck.deal(MARKET_SIZE);
     this.hands = [
       this.deck.deal(INIT_HAND_SIZE),
-      this.deck.deal(INIT_HAND_SIZE)
+      this.deck.deal(INIT_HAND_SIZE),
     ];
   }
 }
@@ -89,6 +89,7 @@ function joinGame(socket, id) {
       yourTurn: true
     }
     console.log('Player 1 started game ' + id)
+    console.log(game)
   } else {
     playerState = {
       gameId: id,
@@ -98,6 +99,7 @@ function joinGame(socket, id) {
     }
 
     console.log('Player 2 joined game ' + id)
+    console.log(game)
   }
 
   socket.emit('START_GAME', playerState)

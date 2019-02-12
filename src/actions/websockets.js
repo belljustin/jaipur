@@ -1,7 +1,7 @@
 import io from 'socket.io-client';
 
 const uri = 'localhost:3001';
-const path = '/test';
+const path = '/jaipur';
 
 const socket = io(uri, {
   path: path
