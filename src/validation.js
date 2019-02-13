@@ -63,7 +63,7 @@ export class Validation {
     return true;
   }
 
-  static isValidPurchase(hand) {
+  static isValidSell(hand) {
     let sHand = selectedCards(hand);
 
     // Check that we're tying to sell SOMETHING
@@ -81,7 +81,6 @@ export class Validation {
 
     // Luxury cards require at least two cards be sold
     let luxuryTypes = "^(red|gold|silver)$";
-    console.log(name);
     if (name.match(luxuryTypes) && sHand.length < 2) {
       return false;
     }

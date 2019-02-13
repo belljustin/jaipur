@@ -45,7 +45,7 @@ export function sellCards() {
         type: SELL_CARDS
       });
       resolve();
-    }).then(() => endTurn(getState().gameId, getState().market));
+    }).then(() => endTurn(getState().gameId, getState().market, getState().tokens));
   };
 }
 
@@ -56,13 +56,14 @@ export function takeCards() {
         type: TAKE_CARDS
       });
       resolve();
-    }).then(() => endTurn(getState().gameId, getState().market));
+    }).then(() => endTurn(getState().gameId, getState().market, getState().tokens));
   };
 }
 
-function endTurn(id, market) {
+function endTurn(id, market, tokens) {
   emit(END_TURN, {
     id,
-    market
+    market,
+    tokens
   });
 }

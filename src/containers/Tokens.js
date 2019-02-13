@@ -17,7 +17,6 @@ Component.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     tokenTypes: state.tokenTypes,
     tokens: state.tokens
