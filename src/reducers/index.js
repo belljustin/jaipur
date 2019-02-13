@@ -18,6 +18,7 @@ const initialState = {
   hand: [],
   tokenTypes: ['red', 'gold', 'silver', 'pink', 'green', 'brown'],
   tokens: new Array(6).fill([]),
+  points: 0,
   yourTurn: false
 }
 
@@ -46,11 +47,11 @@ function jaipur(state, action) {
         games: action.games
       })
     case UPDATE_GAME:
-      console.log(action);
       return Object.assign({}, state, {
         market: action.market,
         tokens: action.tokens,
-        yourTurn: !state.yourTurn
+        yourTurn: action.yourTurn,
+        points: action.score
       })
     case SELECT_HAND_CARD:
       return Object.assign({}, state, {
@@ -64,7 +65,8 @@ function jaipur(state, action) {
       return Object.assign({}, state,
         takeCards(state.market, state.hand))
     case SELL_CARDS:
-      return Object.assign({}, state, sellCards(state.hand, state.tokenTypes, state.tokens))
+      return Object.assign({}, state, 
+        sellCards(state.hand, state.tokenTypes, state.tokens, state.points))
     default:
       return state
   }
@@ -86,19 +88,20 @@ function takeCards(market, hand) {
   }
 }
 
-function sellCards(hand, tokenTypes, tokens) {
+function sellCards(hand, tokenTypes, tokens, points) {
   const _hand = split(hand, h => h.selected)
   const name = _hand.split[0].name
   const i = tokenTypes.indexOf(name);
 
   const tokensTaken = tokens[i].slice(-_hand.split.length);
-  const addedPoints = tokensTake.reduce((acc, t) => acc + t);
+  const addedPoints = tokensTaken.reduce((acc, t) => acc + t);
 
   const tokensLeft = tokens[i].slice(0, -_hand.split.length);
   const newTokens = tokens.map((t, idx) => idx === i ? tokensLeft : t);
   return {
     hand: _hand.unsplit,
-    tokens: newTokens
+    tokens: newTokens,
+    points: points + addedPoints
   }
 }
 

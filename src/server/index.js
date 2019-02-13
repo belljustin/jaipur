@@ -9,7 +9,8 @@ const INIT_HAND_SIZE = 5;
 var games = new Map();
 
 class Game {
-  constructor() {
+  constructor(id) {
+    this.id = id;
     this.turn = 0;
     this.deck = new Deck();
     this.market = this.deck.deal(MARKET_SIZE);
@@ -17,14 +18,7 @@ class Game {
       this.deck.deal(INIT_HAND_SIZE),
       this.deck.deal(INIT_HAND_SIZE),
     ];
-    this.tokenTypes = [
-      'red',
-      'gold',
-      'silver',
-      'pink',
-      'green',
-      'brown'
-    ];
+    this.tokenTypes = ['red','gold','silver','pink','green','brown'];
     this.tokens = [
       [5, 5, 5, 7, 7],
       [5, 5, 5, 6, 6],
@@ -33,6 +27,32 @@ class Game {
       [1, 1, 2, 2, 3, 3, 5],
       [1, 1, 1, 1, 1, 2, 3, 4]
     ];
+    this.scores = [];
+  }
+
+  getPlayerState(playerId) {
+    const i = this.scores.findIndex(s => s.id === playerId);
+    return {
+      gameId: this.id,
+      market: this.market,
+			hand: this.hands[i],
+      tokens: this.tokens,
+      score: this.scores[i].value,
+      yourTurn: this.turn % 2 === i,
+    };
+  }
+
+  addPlayer(playerId) {
+    this.scores.push({
+      id: playerId,
+      value: 0
+    });
+    return this.getPlayerState(playerId);
+  }
+
+  setPlayerPoints(playerId, points) {
+    const i = this.scores.findIndex(s => s.id === playerId);
+    this.scores[i].value = points;
   }
 }
 
@@ -66,12 +86,12 @@ io.on('connection', function(socket) {
   })
 
   socket.on('END_TURN', (data) => {
-    endTurn(io, data.id, data.market, data.tokens);
+    endTurn(io, socket.id, data.gameId, data.market, data.tokens, data.points);
   })
 })
 
 function addGame(id) {
-  game = new Game();
+  game = new Game(id);
   games.set(id, game);
   io.emit('LIST_GAMES', {
     games: Array.from(games.keys())
@@ -81,47 +101,34 @@ function addGame(id) {
 
 
 function joinGame(socket, id) {
-  let playerState = {}
+  let playerState = {};
 
   let game = games.get(id);
   if (game === undefined) {
     game = addGame(id);
-    playerState = {
-      gameId: id,
-      market: game.market,
-      hand: game.hands[0],
-      tokens: game.tokens,
-      yourTurn: true
-    }
+    playerState = game.addPlayer(socket.id);
     console.log('Player 1 started game ' + id)
   } else {
-    playerState = {
-      gameId: id,
-      market: game.market,
-      hand: game.hands[1],
-      tokens: game.tokens,
-      yourTurn: (game.turn % 2 === 1)
-    }
-
+    playerState = game.addPlayer(socket.id);
     console.log('Player 2 joined game ' + id)
   }
-
+	
   socket.emit('START_GAME', playerState)
 }
 
-function endTurn(io, id, market, tokens) {
-    let game = games.get(id);
-    game.tokens = tokens;
+function endTurn(io, playerId, id, market, tokens, points) {
+  let game = games.get(id);
 
-    const n = MARKET_SIZE - market.length;
-    if (n > 0) {
-      game.market = market.concat(game.deck.deal(n))
-    }
+  game.tokens = tokens;
+  const n = MARKET_SIZE - market.length;
+  if (n > 0) {
+    game.market = market.concat(game.deck.deal(n))
+  }
+  game.turn++;
+  game.setPlayerPoints(playerId, points);
 
-    game.turn++;
-    console.log(game)
-    io.in(id).emit('UPDATE_GAME', {
-      tokens: game.tokens,
-      market: game.market
-    });
+  for (score of game.scores) {
+    playerState = game.getPlayerState(score.id)
+    io.to(`${score.id}`).emit('UPDATE_GAME', playerState); 
+  }
 }

@@ -1,5 +1,4 @@
 const MAX_HAND = 7;
-const MARKET_SIZE = 5;
 
 function countResourceCards(cards) {
   return cards.reduce((acc, c) => acc += (c.name === 'special') ? 0 : 1, 0);

@@ -13,7 +13,9 @@ const Component = ({ tokenTypes, tokens }) => (
 
 Component.propTypes = {
   tokenTypes: PropTypes.arrayOf(PropTypes.string).isRequired,
-  tokens: PropTypes.arrayOf(PropTypes.number).isRequired
+  tokens: PropTypes.arrayOf(
+    PropTypes.arrayOf(PropTypes.number)
+  ).isRequired
 }
 
 const mapStateToProps = (state) => {

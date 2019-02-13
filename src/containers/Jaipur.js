@@ -13,6 +13,7 @@ class Component extends React.Component {
   render() {
     return (
       <div>
+        <h2>Points: { this.props.points }</h2>
         <h2>Market</h2>
         <Market />
         <h2>Hand</h2>
@@ -33,11 +34,13 @@ class Component extends React.Component {
 
 Component.propTypes = {
   gameId: PropTypes.string.isRequired,
+  points: PropTypes.number.isRequired
 }
 
 const mapStateToProps = (state, ownProps) => {
   return {
     gameId: ownProps.match.params.id,
+    points: state.points
   }
 }
 
