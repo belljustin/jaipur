@@ -20,8 +20,8 @@ Component.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    tokenTypes: state.tokenTypes,
-    tokens: state.tokens
+    tokenTypes: state.game.tokenTypes,
+    tokens: state.game.tokens
   }
 }
 

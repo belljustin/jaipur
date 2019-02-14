@@ -40,7 +40,7 @@ Component.propTypes = {
 const mapStateToProps = (state, ownProps) => {
   return {
     gameId: ownProps.match.params.id,
-    points: state.points
+    points: state.game.points
   }
 }
 

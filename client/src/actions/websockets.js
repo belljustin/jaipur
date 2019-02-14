@@ -1,5 +1,9 @@
 import io from 'socket.io-client';
 
+import {
+  START_GAME
+} from './index'
+
 const uri = 'localhost:3001';
 const path = '/jaipur';
 
@@ -7,17 +11,15 @@ const socket = io(uri, {
   path: path
 })
 
-export const START_GAME = 'START_GAME';
+export const JOIN = 'JOIN';
 export const LIST_GAMES = 'LIST_GAMES';
 export const UPDATE_GAME = 'UPDATE_GAME';
 
 export const SELL_CARDS = 'SELL_CARDS';
 export const TAKE_CARDS = 'TAKE_CARDS';
-export const END_TURN = 'END_TURN';
-export const JOIN = 'JOIN';
 
 const messageTypes = [
-  START_GAME,
+  START_GAME, // TODO: This can probably be folded into join as a callback?
   LIST_GAMES,
   UPDATE_GAME
 ];
@@ -38,33 +40,13 @@ export function joinGame(id) {
   emit(JOIN, id);
 }
 
-export function sellCards() {
-  return (dispatch, getState, {emit}) => {
-    new Promise((resolve, reject) => {
-      dispatch({
-        type: SELL_CARDS
-      });
-      resolve();
-    }).then(() => endTurn(getState()));
-  };
+export function sellCards(selectedCards) {
+  emit(SELL_CARDS, selectedCards);
 }
 
-export function takeCards() {
-  return (dispatch, getState, {emit}) => {
-    new Promise((resolve, reject) => {
-      dispatch({
-        type: TAKE_CARDS
-      });
-      resolve();
-    }).then(() => endTurn(getState()));
-  };
-}
-
-function endTurn(state) {
-  emit(END_TURN, {
-    gameId: state.gameId,
-    market: state.market,
-    tokens: state.tokens,
-    points: state.points
-  });
+export function takeCards(selectedHand, selectedMarket) {
+  emit(TAKE_CARDS, {
+    selectedHand,
+    selectedMarket
+  })
 }

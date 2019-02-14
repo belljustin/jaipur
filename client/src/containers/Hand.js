@@ -1,10 +1,11 @@
 import { connect } from 'react-redux'
-import { selectHandCard } from '../actions'
+import { selectHandCard } from '../actions/cards'
 import CardList from '../components/CardList'
 
 const mapStateToProps = state => {
   return {
-    cards: state.hand
+    cards: state.cards.hand,
+    selectedCards: state.cards.handSelected
   }
 }
 

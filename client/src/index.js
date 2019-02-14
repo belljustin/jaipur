@@ -5,7 +5,7 @@ import thunkMiddleware from 'redux-thunk';
 import * as serviceWorker from './serviceWorker';
 
 import Root from './Root'
-import jaipur from './reducers'
+import reducer from './reducers'
 
 import { init as websocketInit, emit} from './actions/websockets'
 
@@ -14,7 +14,7 @@ const middleware = [
 ];
 
 const store = createStore(
-  jaipur,
+  reducer,
   applyMiddleware(
     ...middleware
   )

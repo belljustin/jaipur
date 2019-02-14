@@ -7,28 +7,24 @@ const mapStateToProps = state => {
   return {
     name: 'sell',
     disabled: !canSell(state.yourTurn, state.hand),
-  }
-}
-
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
     onClick: () => {
-      dispatch(sellCards())
+      sellCards(state.cards.handSelected)
     }
   }
 }
 
 const canSell = (yourTurn, hand) => {
-  if (!yourTurn) {
-    return false;
-  }
+  return true;
+  // if (!yourTurn) {
+  //   return false;
+  // }
 
-  return Validation.isValidSell(hand);
+  // return Validation.isValidSell(hand);
 }
 
 const Sell = connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(Button)
 
 export default Sell
