@@ -13,8 +13,7 @@ class Deck {
   }
 
   deal(n) {
-    const cards = this.cards.slice(-n)
-      .map(c => makeCard(c));
+    const cards = this.cards.slice(-n);
     this.cards = this.cards.slice(0, -n);
     return cards;
   }
@@ -27,12 +26,5 @@ class Deck {
     return a;
 	}
 };
-
-function makeCard(name) {
-  return {
-    name: name,
-    selected: false,
-  };
-}
 
 export default Deck;

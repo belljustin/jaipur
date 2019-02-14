@@ -1,7 +1,3 @@
-import { 
-  START_GAME,
-} from '../actions'
-
 import {
   UPDATE_GAME,
 } from '../actions/websockets'
@@ -20,18 +16,12 @@ export function game(state, action) {
   }
 
   switch (action.type) {
-    case START_GAME:
-      return Object.assign({}, state, {
-        gameId: action.gameId,
-
-        tokens: action.tokens,
-        yourTurn: action.yourTurn
-      });
     case UPDATE_GAME:
       return Object.assign({}, state, {
+        gameId: action.gameId,
         tokens: action.tokens,
         yourTurn: action.yourTurn,
-        points: action.score
+        points: action.points
       })
     default:
       return state

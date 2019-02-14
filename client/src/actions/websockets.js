@@ -1,9 +1,5 @@
 import io from 'socket.io-client';
 
-import {
-  START_GAME
-} from './index'
-
 const uri = 'localhost:3001';
 const path = '/jaipur';
 
@@ -19,15 +15,14 @@ export const SELL_CARDS = 'SELL_CARDS';
 export const TAKE_CARDS = 'TAKE_CARDS';
 
 const messageTypes = [
-  START_GAME, // TODO: This can probably be folded into join as a callback?
   LIST_GAMES,
   UPDATE_GAME
 ];
 
 export const init = (store) => {
-  messageTypes.forEach(type => socket.on(type, (payload) =>
+  messageTypes.forEach(type => socket.on(type, (payload) => {
     store.dispatch({type, ...payload})
-  ));
+  }));
 };
 
 export const emit = (type, payload) => socket.emit(type, payload);

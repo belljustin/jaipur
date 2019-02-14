@@ -6,20 +6,20 @@ import Button from '../components/Button'
 const mapStateToProps = state => {
   return {
     name: 'sell',
-    disabled: !canSell(state.yourTurn, state.hand),
+    disabled: !canSell(state.game.yourTurn, state.cards.hand, state.cards.handSelected),
     onClick: () => {
       sellCards(state.cards.handSelected)
     }
   }
 }
 
-const canSell = (yourTurn, hand) => {
-  return true;
-  // if (!yourTurn) {
-  //   return false;
-  // }
+const canSell = (yourTurn, hand, handSelected) => {
+  if (!yourTurn) {
+    return false;
+  }
 
-  // return Validation.isValidSell(hand);
+  let selectedHand = Validation.selectedCards(hand, handSelected);
+  return Validation.isValidSell(hand, selectedHand);
 }
 
 const Sell = connect(

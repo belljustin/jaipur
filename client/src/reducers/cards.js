@@ -1,4 +1,3 @@
-import {START_GAME} from '../actions';
 import {SELECT_MARKET_CARD, SELECT_HAND_CARD} from '../actions/cards';
 import {UPDATE_GAME} from '../actions/websockets';
 
@@ -15,17 +14,12 @@ export function cards(state, action) {
   }
 
   switch (action.type) {
-    case START_GAME:
-      return Object.assign({}, state, {
-        hand: action.hand,
-        market: action.market
-      });
     case UPDATE_GAME:
       return Object.assign({}, state, {
         hand: action.hand,
-        handSelected: [],
+        handSelected: new Set(),
         market: action.market,
-        marketSelected: []
+        marketSelected: new Set()
       })
     case SELECT_HAND_CARD:
       return Object.assign({}, state, {
@@ -33,7 +27,7 @@ export function cards(state, action) {
       })
     case SELECT_MARKET_CARD:
       return Object.assign({}, state, {
-        marketSelected: selectCard(state.market, action.index)
+        marketSelected: selectCard(state.marketSelected, action.index)
       })
     default:
       return state;

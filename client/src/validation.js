@@ -1,60 +1,53 @@
 const MAX_HAND = 7;
 
 function countResourceCards(cards) {
-  return cards.reduce((acc, c) => acc += (c.name === 'special') ? 0 : 1, 0);
-}
-
-function selectedCards(cards) {
-  return cards.filter(c => c.selected);
+  return cards.reduce((acc, c) => acc += (c === 'special') ? 0 : 1, 0);
 }
 
 export class Validation {
   // TODO: let consumer know WHY invalid
-  static isValidSingle(hand, market) {
-    return (selectedCards(market).length === 1                // must be selecting exactly one
-      && countResourceCards(hand) < MAX_HAND                  // picking one up cant put us over
-      && selectedCards(market)[0].name !== 'special'          // none selected are special
-      && selectedCards(hand).length === 0);                   // none are selected in our hand
+  static isValidSingle(hand, selectedHand, market, selectedMarket) {
+    return (selectedMarket.length === 1       // must be selecting exactly one
+      && countResourceCards(hand) < MAX_HAND  // picking one up cant put us over
+      && selectedMarket[0] !== 'special'      // none selected are special
+      && selectedHand.length === 0);          // none are selected in our hand
   }
 
-  static isValidSpecial(hand, market) {
-    const sMarket = selectedCards(market);
-    const specials = market.filter(c => c.name === 'special');
-    return (specials.length > 0                                 // must have some specials cards
-      && specials.reduce((acc, c) => acc && c.selected, true)   // all specials must be selected
-      && sMarket.length === specials.length                     // selected must only be special
-      && selectedCards(hand).length === 0);                     // and no cards selected in hand
+  static isValidSpecial(hand, selectedHand, market, selectedMarket) {
+    const marketSpecials = market.filter(c => c === 'special');
+    const sMarketSpecials = selectedMarket.filter(c => c === 'special');
+    return (marketSpecials.length > 0                       // must have some specials cards
+      && sMarketSpecials.length === marketSpecials          // all specials must be selected
+      && selectedMarket.length === marketSpecials.length    // selected must only be special
+      && selectedHand.length === 0);                        // and no cards selected in hand
   }
 
-  static isValidMultiple(hand, market) {
-    let sHand = selectedCards(hand);
-    let sMarket = selectedCards(market);
-
+  static isValidMultiple(hand, selectedHand, market, selectedMarket) {
     // Verify there's an even trade and we're trading at least two cards
-    if (sHand.length !== sMarket.length || sHand.length < 2) {
+    if (selectedHand.length !== selectedMarket.length || selectedHand.length < 2) {
       return false;
     }
     
     // Verify no special cards are selected in the market
-    for (let i = 0; i < sMarket.length; i++) {
-      if (sMarket[i].name === "special") {
+    for (let i = 0; i < selectedMarket.length; i++) {
+      if (selectedMarket[i] === "special") {
         return false;
       }
     }
 
     // Verify added cards don't put us over the the max hand limit
-    let numSpecialSelected = sHand.length - countResourceCards(sHand);
+    let numSpecialSelected = selectedHand.length - countResourceCards(selectedHand);
     if (countResourceCards(hand) + numSpecialSelected > MAX_HAND) {
       return false;
     }
 
     // Verify type set of sHand and sMarket don't intersect
     let handTypes = new Set();
-    for (let c of sHand) {
-      handTypes.add(c.name);
+    for (let c of selectedHand) {
+      handTypes.add(c);
     }
-    for (let c of sMarket) {
-      if (handTypes.has(c.name)) {
+    for (let c of selectedMarket) {
+      if (handTypes.has(c)) {
        return false;
       }
     }
@@ -62,29 +55,35 @@ export class Validation {
     return true;
   }
 
-  static isValidSell(hand) {
-    let sHand = selectedCards(hand);
-
+  static isValidSell(hand, selectedHand) {
     // Check that we're tying to sell SOMETHING
-    if (sHand < 1) {
+    if (selectedHand < 1) {
       return false;
     }
 
     // Check that all the sale cards are of the same type
-    let name = sHand[0].name;
-    for (let c of sHand) {
-      if (c.name !== name) {
+    let name = selectedHand[0];
+    for (let c of selectedHand) {
+      if (c !== name) {
         return false;
       }
     }
 
     // Luxury cards require at least two cards be sold
     let luxuryTypes = "^(red|gold|silver)$";
-    if (name.match(luxuryTypes) && sHand.length < 2) {
+    if (name.match(luxuryTypes) && selectedHand.length < 2) {
       return false;
     }
 
     return true;
+  }
+
+  static selectedCards(cards, selected) {
+    let scards = []
+    for (let i of selected.keys()) {
+      scards.push(cards[i]);
+    }
+    return scards;
   }
 }
 

@@ -5,7 +5,7 @@ import CardList from '../components/CardList'
 const mapStateToProps = state => {
   return {
     cards: state.cards.market,
-    selectedCards: state.cards.handSelected
+    selectedCards: state.cards.marketSelected
   }
 }
 
