@@ -9,7 +9,7 @@ const mapStateToProps = state => {
     name: 'take',
     disabled: !canTake(state.cards.hand, state.cards.handSelected, state.cards.market, state.cards.marketSelected, state.game.yourTurn),
     onClick: () => {
-      takeCards(state.cards.selectedHand, state.cards.selectedMarket)
+      takeCards(state.game.gameId, state.cards.selectedHand, state.cards.selectedMarket)
     }
   }
 }

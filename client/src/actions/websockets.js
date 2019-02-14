@@ -35,13 +35,19 @@ export function joinGame(id) {
   emit(JOIN, id);
 }
 
-export function sellCards(selectedCards) {
-  emit(SELL_CARDS, selectedCards);
+export function sellCards(gameId, selectedCards) {
+  const msg = {
+    gameId,
+    selectedCards: Array.from(selectedCards.values())
+  }
+  emit(SELL_CARDS, msg);
 }
 
-export function takeCards(selectedHand, selectedMarket) {
-  emit(TAKE_CARDS, {
-    selectedHand,
-    selectedMarket
-  })
+export function takeCards(gameId, selectedHand, selectedMarket) {
+  const msg = {
+    gameId,
+    selectedHand: Array.from(selectedHand.values()),
+    selectedMarket: Array.from(selectedMarket.values())
+  }
+  emit(TAKE_CARDS, msg)
 }

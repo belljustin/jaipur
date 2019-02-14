@@ -21,7 +21,7 @@ class Player {
   }
 
   sellCards(selectedCards) {
-    for (i of selectedCards) {
+    for (let i of selectedCards) {
       this.hand.splice(i, 1);
     }
   }
@@ -66,14 +66,17 @@ class Game {
 
   sellCards(playerId, selectedCards) {
     let player = this.getPlayer(playerId);
+
+    const i = selectedCards.values().next().value;
+    const name = player.hand[i];
+
+    const j = tokenType.findIndex(t => t === name);
+    let purchasedTokens = this.tokens[j].slice(-selectedCards.size);
+
     player.sellCards(selectedCards);
+    this.tokens[j] = this.tokens[j].slice(0, -selectedCards.size);
 
-    const i = selectedCards.values().next();
-    const name = this.player.hand[i];
-
-    const j = tokenType.find(t => t === name);
-    let purchasedTokens = this.tokens[j].slice(-selectedCards.length);
-    this.tokens[j] = this.tokens[j].slice(0, -selectedCards.length);
+    this.turn++;
   }
 
   tradeCards(playerId, selectedMarket, selectedHand) {
@@ -88,6 +91,8 @@ class Game {
     givenCards.forEach(c => {
       this.market.push(c);
     })
+
+    this.turn++;
   }
 
   getPlayer(playerId) {

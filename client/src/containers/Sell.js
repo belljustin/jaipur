@@ -8,7 +8,7 @@ const mapStateToProps = state => {
     name: 'sell',
     disabled: !canSell(state.game.yourTurn, state.cards.hand, state.cards.handSelected),
     onClick: () => {
-      sellCards(state.cards.handSelected)
+      sellCards(state.game.gameId, state.cards.handSelected)
     }
   }
 }

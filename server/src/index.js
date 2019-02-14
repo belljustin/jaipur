@@ -35,6 +35,20 @@ io.on('connection', function(socket) {
       socket.join(id);
     };
   })
+
+  socket.on('SELL_CARDS', (data) => {
+    let game = games.get(data.gameId);
+    game.sellCards(socket.id, new Set(data.selectedCards));
+    updatePlayers(io, game);
+  });
+
+  socket.on('TAKE_CARDS', (data) => {
+    let game = games.get(data.gameId);
+    game.tradeCards(socket.id,
+      new Set(data.selectedMarket),
+      new Set(data.selectedHand));
+    updatePlayers(io, game);
+  });
 })
 
 function generateClientState(game, playerId) {
@@ -82,3 +96,11 @@ function addGame(id) {
   })
   return game;
 }
+
+function updatePlayers(io, game) {
+  for (let player of game.players) {
+    let clientState = generateClientState(game, player.id);
+    io.to(`${player.id}`).emit('UPDATE_GAME', clientState);
+  }
+}
+
