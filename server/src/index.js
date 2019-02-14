@@ -1,6 +1,6 @@
 const http = require('http');
 
-const Deck = require('./Deck.js');
+import Deck from './Deck';
 
 const PATH = '/jaipur';
 const MARKET_SIZE = 5;

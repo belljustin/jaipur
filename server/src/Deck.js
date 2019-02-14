@@ -1,4 +1,4 @@
-module.exports = class Deck {
+class Deck {
   constructor() {
     let unshuffledCards = Array(6).fill("red")
       .concat(Array(1).fill("gold"))
@@ -34,3 +34,5 @@ function makeCard(name) {
     selected: false,
   };
 }
+
+export default Deck;
