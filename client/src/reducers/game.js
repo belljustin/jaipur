@@ -7,6 +7,7 @@ export const initialState = {
   tokenTypes: ['red', 'gold', 'silver', 'pink', 'green', 'brown'],
   tokens: new Array(6).fill([]),
   yourTurn: false,
+  gameOver: false,
   points: 0,
 }
 
@@ -21,6 +22,7 @@ export function game(state, action) {
         gameId: action.gameId,
         tokens: action.tokens,
         yourTurn: action.yourTurn,
+        gameOver: action.gameOver,
         points: action.points
       })
     default:

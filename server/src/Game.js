@@ -103,6 +103,21 @@ class Game {
     const i = this.players.findIndex(p => p.id === playerId);
     return (this.turn % 2 === i);
   }
+
+  isGameOver() {
+    if (this.deck.size()) {
+      return true;
+    }
+
+    numEmptyTokens = this.tokens.reduce((acc, t) => {
+      acc += (t.length === 0) ? 1 : 0;
+    })
+    if (numEmptyTokens >= 3) {
+      return true;
+    }
+
+    return false;
+  }
 }
 
 export default Game;
