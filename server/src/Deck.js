@@ -25,6 +25,10 @@ class Deck {
     }
     return a;
 	}
+
+  size() {
+    return this.cards.length;
+  }
 };
 
 export default Deck;

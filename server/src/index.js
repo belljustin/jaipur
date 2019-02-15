@@ -54,12 +54,14 @@ io.on('connection', function(socket) {
 function generateClientState(game, playerId) {
   const player = game.getPlayer(playerId);
   const yourTurn = game.isPlayerTurn(playerId);
+  const gameOver = game.isGameOver();
 
   return {
     // game state
     gameId: game.id,
     tokens: game.tokens,
     yourTurn: yourTurn,
+    gameOver: gameOver,
     points: player.points,
 
     // card state
