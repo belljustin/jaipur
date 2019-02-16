@@ -1,42 +1,50 @@
-.card {
-  /* Add shadows to create the "card" effect */
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  transition: 0.3s;
-  border-radius: 5px; /* 5px rounded corners */
-  padding: 10px;
-  margin: 10px;
-  width: 150px;
-
+.cardGroup {
+  /**
+   * Lay out the children of this container with
+   * flexbox, which is horizontal by default.
+   */
   display: flex;
-  flex-flow: column nowrap;
+
+  border: 1px solid #CAD0D2;
+  border-radius: 4px;
+  overflow: hidden;
 }
 
-/* On mouse-over, add a deeper shadow */
-.card:hover {
-  box-shadow: 0 8px 20px 0 rgba(0,0,0,0.5);
-}
+.cardGroup__card {
+    /**
+     * The flex property is a short-hand for setting
+     * the flex-grow, flex-shrink, and flex-basis
+     * properties. These properties control how the
+     * element resizes to fill its container.
+     *
+     * We'll set flex-grow to 1 so that it will
+     * expand to fill its container. (The default
+     * default value is 0.)
+     *
+     * We'll also set flex-shrink to 1 so that the
+     * element will shrink as its container gets
+     * smaller. (The default value is 1.)
+     *
+     * Last, we set flex-basis to 0 so that its
+     * size is solely determined by the size of
+     * the container. (The default value
+     * is auto, which would cause the content's
+     * size to also be a factor in this calculation.)
+     *
+     * The net result of these properties is that the
+     * element is a fluid size, and will expand and
+     * shrink with its container and siblings, but
+     * they will all have the same size, even if they
+     * have different amounts of content.
+     *
+     * NOTE: IE11 ignores flex short-hand declarations
+     * with unitless flex-basis values. So we have to
+     * use 0% instead of 0 as a workaround. You can
+     * find more info at:
+     * github.com/philipwalton/flexbugs.
+     */
+    flex: 1 1 0%;
 
-/* On selection, add a bright shadow */
-.selected {
-  box-shadow: 0 0 40px 0 rgba(255,255,224,0.5) !important;
-}
-
-.imageContainer {
-    display: flex;
-}
-
-/* Add some padding inside the card container */
-.textContainer {
-    margin-top: auto;
-}
-
-/* Add rounded corners to the top left and the top right corner of the image */
-.card img {
-    width: 100%;
-    margin: auto;
-}
-.market {
-    display: flex;
-    flex-direction: row;
-    flex-basis: 200px;
+    border: none;
+    border-radius: 0;
 }

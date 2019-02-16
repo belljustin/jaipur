@@ -26,9 +26,9 @@ class Player {
     }
   }
 
-  tradeCards(selectedCards, takenCards) {
+  tradeCards(selectedHand, takenCards) {
     let givenCards = []
-    selectedMarket.forEach(i => {
+    selectedHand.forEach(i => {
       givenCards.push(this.market[i]);
       this.hand.splice(i, 1);
     })
@@ -81,8 +81,9 @@ class Game {
 
   tradeCards(playerId, selectedMarket, selectedHand) {
     let takenCards = []
+    const _market = Object.assign({}, this.market);
     selectedMarket.forEach(i => {
-      takenCards.push(this.market[i]);
+      takenCards.push(_market[i]);
       this.market.splice(i, 1);
     })
 
@@ -91,6 +92,10 @@ class Game {
     givenCards.forEach(c => {
       this.market.push(c);
     })
+
+    const n = MARKET_SIZE - this.market.length
+    this.market = this.market.concat(this.deck.deal(n));
+    console.log(this.market);
 
     this.turn++;
   }

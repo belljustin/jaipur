@@ -12,11 +12,12 @@ import acorn from './resources/037-acorn.png';
 const Card = ({ onClick, name, selected }) => (
   <div 
     onClick={onClick}
+    className="cardGroup__card"
     style={{
       textDecoration: selected ? 'line-through' : 'none'
     }}
   >
-    <img src={getImg(name)} style={getStyle(selected)}/>
+    <img alt={name} src={getImg(name)} style={getStyle(selected)}/>
   </div>
 )
 

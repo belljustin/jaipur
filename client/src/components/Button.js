@@ -2,8 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types'
 
 const Button = ({ onClick, name, disabled }) => (
-  <button class={getClass(disabled)} type="button" onClick={() => onClick()} disabled={disabled}>
-    {name}
+  <button 
+    className={getClass(disabled)}
+    type="button"
+    onClick={() => onClick()}
+    disabled={disabled}>
+      {name}
   </button>
 )
 

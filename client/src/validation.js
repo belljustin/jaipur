@@ -17,7 +17,7 @@ export class Validation {
     const marketSpecials = market.filter(c => c === 'acorn');
     const sMarketSpecials = selectedMarket.filter(c => c === 'acorn');
     return (marketSpecials.length > 0                       // must have some acorns cards
-      && sMarketSpecials.length === marketSpecials          // all acorns must be selected
+      && sMarketSpecials.length === marketSpecials.length   // all acorns must be selected
       && selectedMarket.length === marketSpecials.length    // selected must only be acorn
       && selectedHand.length === 0);                        // and no cards selected in hand
   }
@@ -70,7 +70,7 @@ export class Validation {
     }
 
     // Luxury cards require at least two cards be sold
-    let luxuryTypes = "^(red|gold|silver)$";
+    let luxuryTypes = "^(broccoli|bellpepper|carrot)$";
     if (name.match(luxuryTypes) && selectedHand.length < 2) {
       return false;
     }
