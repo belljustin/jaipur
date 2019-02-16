@@ -7,6 +7,7 @@ import Hand from '../containers/Hand';
 import Take from '../containers/Take';
 import Sell from '../containers/Sell';
 import Tokens from '../containers/Tokens';
+import Logs from '../containers/Logs';
 import { joinGame } from '../actions/websockets';
 
 import './Jaipur.css';
@@ -24,6 +25,7 @@ class Component extends React.Component {
           <Hand name="Hand"/>
           <Take />
           <Sell />
+          <Logs />
         </div>
       </div>
     )

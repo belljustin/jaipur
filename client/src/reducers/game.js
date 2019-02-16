@@ -1,5 +1,6 @@
 import {
   UPDATE_GAME,
+  LOG
 } from '../actions/websockets'
 
 export const initialState = {
@@ -14,6 +15,7 @@ export const initialState = {
   tokens: new Array(6).fill([]),
   yourTurn: false,
   gameOver: false,
+  logs: [],
   points: 0,
 }
 
@@ -31,6 +33,10 @@ export function game(state, action) {
         gameOver: action.gameOver,
         points: action.points
       })
+    case LOG:
+      const logs = new Array(action.msg)
+        .concat(state.logs.slice(0, 5))
+      return Object.assign({}, state, {logs});
     default:
       return state
   }

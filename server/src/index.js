@@ -33,23 +33,52 @@ io.on('connection', function(socket) {
   socket.on('JOIN', (id) => {
     if (joinGame(socket, id) === 0) {
       socket.join(id);
+      const msg = "Player " + socket.id + ' joined the game';
+      logMessage(io, id, msg);
     };
   })
 
   socket.on('SELL_CARDS', (data) => {
     let game = games.get(data.gameId);
-    game.sellCards(socket.id, new Set(data.selectedCards));
+    const sale = game.sellCards(socket.id, new Set(data.selectedCards));
     updatePlayers(io, game);
+    logSale(io, socket.id, data.gameId, sale.name, sale.num);
   });
 
   socket.on('TAKE_CARDS', (data) => {
     let game = games.get(data.gameId);
-    game.tradeCards(socket.id,
+    const trade = game.tradeCards(socket.id,
       new Set(data.selectedMarket),
       new Set(data.selectedHand));
     updatePlayers(io, game);
+    logTrade(io, socket.id, data.gameId, trade.taken, trade.given);
   });
 })
+
+function logSale(io, playerId, gameId, name, num) {
+  const msg = 'Player ' + playerId + ' sold ' + num + ' ' + name;
+  console.log(msg);
+  logMessage(io, gameId, msg);
+}
+
+function logTrade(io, playerId, gameId, taken, given) {
+  let msg = 'Player ' + playerId + ' ';
+  if (given.length === 0 && taken.length === 1) {
+    msg += 'took a ' + taken[0];
+  } else if (given.length === 0) {
+    msg += 'took all the acorns';
+  } else {
+    msg += 'traded ' + given.join(",") + ' for ' + taken.join(","); 
+  }
+  console.log(msg);
+  logMessage(io, gameId, msg);
+}
+
+function logMessage(io, gameId, msg) {
+  io.to(gameId).emit('LOG', {
+    msg 
+  });
+}
 
 function generateClientState(game, playerId) {
   const player = game.getPlayer(playerId);

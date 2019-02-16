@@ -91,6 +91,11 @@ class Game {
     this.tokens[j] = this.tokens[j].slice(0, -selectedCards.size);
 
     this.turn++;
+
+    return {
+      name,
+      num: selectedCards.size
+    }
   }
 
   tradeCards(playerId, selectedMarket, selectedHand) {
@@ -112,6 +117,11 @@ class Game {
     console.log(this.market);
 
     this.turn++;
+
+    return {
+      taken: takenCards,
+      given: givenCards 
+    }
   }
 
   getPlayer(playerId) {

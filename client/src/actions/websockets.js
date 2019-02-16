@@ -10,17 +10,20 @@ const socket = io(uri, {
 export const JOIN = 'JOIN';
 export const LIST_GAMES = 'LIST_GAMES';
 export const UPDATE_GAME = 'UPDATE_GAME';
+export const LOG = 'LOG';
 
 export const SELL_CARDS = 'SELL_CARDS';
 export const TAKE_CARDS = 'TAKE_CARDS';
 
 const messageTypes = [
   LIST_GAMES,
-  UPDATE_GAME
+  UPDATE_GAME,
+  LOG
 ];
 
 export const init = (store) => {
   messageTypes.forEach(type => socket.on(type, (payload) => {
+    console.log(type);
     store.dispatch({type, ...payload})
   }));
 };
