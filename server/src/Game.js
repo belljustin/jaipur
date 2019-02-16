@@ -34,7 +34,7 @@ class Player {
   tradeCards(selectedHand, takenCards) {
     let givenCards = []
     selectedHand.forEach(i => {
-      givenCards.push(this.market[i]);
+      givenCards.push(this.hand[i]);
       this.hand.splice(i, 1);
     })
 
@@ -113,9 +113,9 @@ class Game {
     })
 
     const n = MARKET_SIZE - this.market.length
-    this.market = this.market.concat(this.deck.deal(n));
-    console.log(this.market);
-
+    if (n > 0) {
+      this.market = this.market.concat(this.deck.deal(n));
+    }
     this.turn++;
 
     return {
@@ -138,7 +138,7 @@ class Game {
       return true;
     }
 
-    numEmptyTokens = this.tokens.reduce((acc, t) => {
+    let numEmptyTokens = this.tokens.reduce((acc, t) => {
       acc += (t.length === 0) ? 1 : 0;
     })
     if (numEmptyTokens >= 3) {
