@@ -1,11 +1,12 @@
 import React from 'react';
-import './Market.css';
 import Card from './Card.js';
+import './Card.css';
 
 import PropTypes from 'prop-types';
 
-const CardList = ({ cards, selectedCards, onCardClick }) => (
-  <ul>
+const CardList = ({ name, cards, selectedCards, onCardClick }) => (
+  <div className="nes-container with-title cardGroup">
+    <h2 className="title">{name}</h2>
     {cards.map((card, index) => (
       <Card 
         key={index}
@@ -14,7 +15,7 @@ const CardList = ({ cards, selectedCards, onCardClick }) => (
         onClick={() => onCardClick(index)}
       />
     ))}
-  </ul>
+  </div>
 )
 
 CardList.propTypes = {

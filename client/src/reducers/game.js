@@ -4,7 +4,13 @@ import {
 
 export const initialState = {
   gameId: null,
-  tokenTypes: ['red', 'gold', 'silver', 'pink', 'green', 'brown'],
+  tokenTypes: [
+    'broccoli',
+    'bellpepper',
+    'carrot',
+    'apple',
+    'banana',
+    'grape'],
   tokens: new Array(6).fill([]),
   yourTurn: false,
   gameOver: false,

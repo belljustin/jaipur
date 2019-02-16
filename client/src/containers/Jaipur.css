@@ -1,0 +1,22 @@
+.flex-container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#game-container {
+    display: -webkit-flex;
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+    padding: 1em;
+}
+
+#cards-container {
+    display: -webkit-flex;
+    display: flex;
+    flex-direction: column;
+    flex: 4;
+    padding: 1em;
+}

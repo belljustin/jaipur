@@ -3,7 +3,7 @@ import Deck from './Deck';
 const MARKET_SIZE = 5;
 const INIT_HAND_SIZE = 5;
 
-const tokenType = ['red', 'gold', 'silver', 'pink', 'green', 'brown'];
+const tokenType = ['broccoli', 'bellpepper', 'carrot', 'apple', 'banana', 'grape'];
 const initialTokens = [
   [5, 5, 5, 7, 7],
   [5, 5, 5, 6, 6],
@@ -11,6 +11,11 @@ const initialTokens = [
   [1, 1, 2, 2, 3, 3, 5],
   [1, 1, 2, 2, 3, 3, 5],
   [1, 1, 1, 1, 1, 2, 3, 4]
+];
+const initialHiddenTokens = [
+  [1, 1, 1, 2, 2, 2, 3, 3, 3],
+  [4, 4, 5, 5, 6, 6],
+  [8, 8, 9, 10, 10]
 ];
 
 class Player {
@@ -26,9 +31,9 @@ class Player {
     }
   }
 
-  tradeCards(selectedCards, takenCards) {
+  tradeCards(selectedHand, takenCards) {
     let givenCards = []
-    selectedMarket.forEach(i => {
+    selectedHand.forEach(i => {
       givenCards.push(this.market[i]);
       this.hand.splice(i, 1);
     })
@@ -39,12 +44,17 @@ class Player {
 
     return givenCards;
   }
+
+  addPoints(points) {
+    this.points += points;
+  }
 }
 
 class Game {
   constructor(id) {
     this.id = id;
     this.tokens = initialTokens;
+    this.hiddenTokens = initialHiddenTokens;
     this.deck = new Deck();
     // TODO: put specials here
     this.market = this.deck.deal(MARKET_SIZE);
@@ -71,9 +81,13 @@ class Game {
     const name = player.hand[i];
 
     const j = tokenType.findIndex(t => t === name);
-    let purchasedTokens = this.tokens[j].slice(-selectedCards.size);
+    const purchasedTokens = this.tokens[j]
+      .slice(-selectedCards.size);
+    const hiddenTokens = this.getHiddenTokens(selectedCards.size);
+    const tokens = purchasedTokens.concat(hiddenTokens);
 
     player.sellCards(selectedCards);
+    player.addPoints(tokens.reduce((acc, t) => acc += t));
     this.tokens[j] = this.tokens[j].slice(0, -selectedCards.size);
 
     this.turn++;
@@ -81,8 +95,9 @@ class Game {
 
   tradeCards(playerId, selectedMarket, selectedHand) {
     let takenCards = []
+    const _market = Object.assign({}, this.market);
     selectedMarket.forEach(i => {
-      takenCards.push(this.market[i]);
+      takenCards.push(_market[i]);
       this.market.splice(i, 1);
     })
 
@@ -91,6 +106,10 @@ class Game {
     givenCards.forEach(c => {
       this.market.push(c);
     })
+
+    const n = MARKET_SIZE - this.market.length
+    this.market = this.market.concat(this.deck.deal(n));
+    console.log(this.market);
 
     this.turn++;
   }
@@ -105,18 +124,32 @@ class Game {
   }
 
   isGameOver() {
-    if (this.Deck.size()) {
+    if (this.deck.size()) {
       return true;
     }
 
     numEmptyTokens = this.tokens.reduce((acc, t) => {
       acc += (t.length === 0) ? 1 : 0;
     })
-    if (numEmptyTokens) >= 3 {
+    if (numEmptyTokens >= 3) {
       return true;
     }
-
     return false;
+  }
+
+  getHiddenTokens(n) {
+    let value = undefined;
+    if (n > 5) {
+      value = this.hiddenTokens[2].pop();
+    } else if (n === 4) {
+      value = this.hiddenTokens[1].pop();
+    } else if (n === 3) {
+      value = this.hiddenTokens[0].pop();
+    }
+    if (value === undefined) {
+      return 0; 
+    }
+    return value;
   }
 }
 

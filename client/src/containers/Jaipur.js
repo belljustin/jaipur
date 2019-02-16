@@ -9,19 +9,22 @@ import Sell from '../containers/Sell';
 import Tokens from '../containers/Tokens';
 import { joinGame } from '../actions/websockets';
 
+import './Jaipur.css';
+
 class Component extends React.Component {
   render() {
     return (
-      <div>
-        <h2>Points: { this.props.points }</h2>
-        <h2>Market</h2>
-        <Market />
-        <h2>Hand</h2>
-        <Hand />
-        <Take />
-        <Sell />
-        <h2>Tokens</h2>
-        <Tokens />
+      <div className="containers flex-container">
+        <div id="game-container">
+          <h3>Points: { this.props.points }</h3>
+          <Tokens />
+        </div>
+        <div id="cards-container" className="cards-container">
+          <Market name="Market"/>
+          <Hand name="Hand"/>
+          <Take />
+          <Sell />
+        </div>
       </div>
     )
   }

@@ -1,15 +1,15 @@
 class Deck {
   constructor() {
-    let unshuffledCards = Array(6).fill("red")
-      .concat(Array(1).fill("gold"))
-      .concat(Array(5).fill("silver"))
-      .concat(Array(8).fill("pink"))
-      .concat(Array(8).fill("green"))
-      .concat(Array(10).fill("brown"))
-      .concat(Array(5).fill("special"));
+    let unshuffledCards = Array(6).fill("broccoli")
+      .concat(Array(1).fill("bellpepper"))
+      .concat(Array(5).fill("carrot"))
+      .concat(Array(8).fill("apple"))
+      .concat(Array(8).fill("banana"))
+      .concat(Array(10).fill("grape"))
+      .concat(Array(5).fill("acorn"));
 
     this.cards = this.shuffle(unshuffledCards)
-			.concat(Array(3).fill("special"));
+			.concat(Array(3).fill("acorn"));
   }
 
   deal(n) {

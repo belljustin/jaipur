@@ -4,11 +4,21 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 const Component = ({ tokenTypes, tokens }) => (
-  <ul>
+  <table className="nes-table is-bordered is-centered">
+  <thead>
+    <tr>
+      <td>Tokens</td>
+    </tr>
+  </thead>
+  <tbody>
     {tokenTypes.map((type, index) => (
-      <li key={index}><b>{type}</b> {tokens[index].join(", ")} </li>
+      <tr key={index}>
+        <td>{type}</td>
+        <td>{tokens[index].join(" ")}</td>
+      </tr>
     ))}
-  </ul>
+  </tbody>
+  </table>
 )
 
 Component.propTypes = {
