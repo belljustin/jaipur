@@ -1,7 +1,7 @@
 const MAX_HAND = 7;
 
 function countResourceCards(cards) {
-  return cards.reduce((acc, c) => acc += (c === 'special') ? 0 : 1, 0);
+  return cards.reduce((acc, c) => acc += (c === 'acorn') ? 0 : 1, 0);
 }
 
 export class Validation {
@@ -9,16 +9,16 @@ export class Validation {
   static isValidSingle(hand, selectedHand, market, selectedMarket) {
     return (selectedMarket.length === 1       // must be selecting exactly one
       && countResourceCards(hand) < MAX_HAND  // picking one up cant put us over
-      && selectedMarket[0] !== 'special'      // none selected are special
+      && selectedMarket[0] !== 'acorn'      // none selected are acorn
       && selectedHand.length === 0);          // none are selected in our hand
   }
 
   static isValidSpecial(hand, selectedHand, market, selectedMarket) {
-    const marketSpecials = market.filter(c => c === 'special');
-    const sMarketSpecials = selectedMarket.filter(c => c === 'special');
-    return (marketSpecials.length > 0                       // must have some specials cards
-      && sMarketSpecials.length === marketSpecials          // all specials must be selected
-      && selectedMarket.length === marketSpecials.length    // selected must only be special
+    const marketSpecials = market.filter(c => c === 'acorn');
+    const sMarketSpecials = selectedMarket.filter(c => c === 'acorn');
+    return (marketSpecials.length > 0                       // must have some acorns cards
+      && sMarketSpecials.length === marketSpecials          // all acorns must be selected
+      && selectedMarket.length === marketSpecials.length    // selected must only be acorn
       && selectedHand.length === 0);                        // and no cards selected in hand
   }
 
@@ -28,9 +28,9 @@ export class Validation {
       return false;
     }
     
-    // Verify no special cards are selected in the market
+    // Verify no acorn cards are selected in the market
     for (let i = 0; i < selectedMarket.length; i++) {
-      if (selectedMarket[i] === "special") {
+      if (selectedMarket[i] === "acorn") {
         return false;
       }
     }

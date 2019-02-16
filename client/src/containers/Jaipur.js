@@ -14,12 +14,12 @@ class Component extends React.Component {
     return (
       <div>
         <h2>Points: { this.props.points }</h2>
-        <h2>Market</h2>
-        <Market />
-        <h2>Hand</h2>
-        <Hand />
-        <Take />
-        <Sell />
+        <Market name="Market"/>
+        <Hand name="Hand"/>
+        <div id="buttons">
+          <Take />
+          <Sell />
+        </div>
         <h2>Tokens</h2>
         <Tokens />
       </div>

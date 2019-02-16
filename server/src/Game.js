@@ -3,7 +3,7 @@ import Deck from './Deck';
 const MARKET_SIZE = 5;
 const INIT_HAND_SIZE = 5;
 
-const tokenType = ['red', 'gold', 'silver', 'pink', 'green', 'brown'];
+const tokenType = ['broccoli', 'bellpepper', 'carrot', 'apple', 'banana', 'grape'];
 const initialTokens = [
   [5, 5, 5, 7, 7],
   [5, 5, 5, 6, 6],

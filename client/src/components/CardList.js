@@ -4,8 +4,9 @@ import Card from './Card.js';
 
 import PropTypes from 'prop-types';
 
-const CardList = ({ cards, selectedCards, onCardClick }) => (
-  <ul>
+const CardList = ({ name, cards, selectedCards, onCardClick }) => (
+  <div class="nes-container with-title">
+    <h2 class="title">{name}</h2>
     {cards.map((card, index) => (
       <Card 
         key={index}
@@ -14,7 +15,7 @@ const CardList = ({ cards, selectedCards, onCardClick }) => (
         onClick={() => onCardClick(index)}
       />
     ))}
-  </ul>
+  </div>
 )
 
 CardList.propTypes = {
