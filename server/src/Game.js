@@ -12,6 +12,11 @@ const initialTokens = [
   [1, 1, 2, 2, 3, 3, 5],
   [1, 1, 1, 1, 1, 2, 3, 4]
 ];
+const initialHiddenTokens = [
+  [1, 1, 1, 2, 2, 2, 3, 3, 3],
+  [4, 4, 5, 5, 6, 6],
+  [8, 8, 9, 10, 10]
+];
 
 class Player {
   constructor(id, hand) {
@@ -39,12 +44,17 @@ class Player {
 
     return givenCards;
   }
+
+  addPoints(points) {
+    this.points += points;
+  }
 }
 
 class Game {
   constructor(id) {
     this.id = id;
     this.tokens = initialTokens;
+    this.hiddenTokens = initialHiddenTokens;
     this.deck = new Deck();
     // TODO: put specials here
     this.market = this.deck.deal(MARKET_SIZE);
@@ -71,9 +81,13 @@ class Game {
     const name = player.hand[i];
 
     const j = tokenType.findIndex(t => t === name);
-    let purchasedTokens = this.tokens[j].slice(-selectedCards.size);
+    const purchasedTokens = this.tokens[j]
+      .slice(-selectedCards.size);
+    const hiddenTokens = this.getHiddenTokens(selectedCards.size);
+    const tokens = purchasedTokens.concat(hiddenTokens);
 
     player.sellCards(selectedCards);
+    player.addPoints(tokens.reduce((acc, t) => acc += t));
     this.tokens[j] = this.tokens[j].slice(0, -selectedCards.size);
 
     this.turn++;
@@ -122,6 +136,21 @@ class Game {
     }
 
     return false;
+  }
+
+  getHiddenTokens(n) {
+    let value = undefined;
+    if (n > 5) {
+      value = this.hiddenTokens[2].pop();
+    } else if (n === 4) {
+      value = this.hiddenTokens[1].pop();
+    } else if (n === 3) {
+      value = this.hiddenTokens[0].pop();
+    }
+    if (value === undefined) {
+      return 0; 
+    }
+    return value;
   }
 }
 
