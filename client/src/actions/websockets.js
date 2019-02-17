@@ -1,10 +1,10 @@
 import io from 'socket.io-client';
 
-const uri = 'localhost:3001';
-const path = '/jaipur';
+const uri = 'https://www.belljust.in';
+const path = '/jaipur/ws/';
 
 const socket = io(uri, {
-  path: path
+  path: path,
 })
 
 export const JOIN = 'JOIN';

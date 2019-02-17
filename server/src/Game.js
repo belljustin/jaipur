@@ -26,14 +26,14 @@ class Player {
   }
 
   sellCards(selectedCards) {
-    for (let i of selectedCards) {
+    for (let i of selectedCards.sort().reverse()) {
       this.hand.splice(i, 1);
     }
   }
 
   tradeCards(selectedHand, takenCards) {
     let givenCards = []
-    selectedHand.forEach(i => {
+    selectedHand.sort().reverse().forEach(i => {
       givenCards.push(this.hand[i]);
       this.hand.splice(i, 1);
     })
@@ -101,7 +101,7 @@ class Game {
   tradeCards(playerId, selectedMarket, selectedHand) {
     let takenCards = []
     const _market = Object.assign({}, this.market);
-    selectedMarket.forEach(i => {
+    selectedMarket.sort().reverse().forEach(i => {
       takenCards.push(_market[i]);
       this.market.splice(i, 1);
     })

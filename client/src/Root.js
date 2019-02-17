@@ -11,7 +11,7 @@ import './index.css';
 const Root = ({ store }) => {
   return (
     <Provider store={store}>
-      <Router>
+      <Router basename="/jaipur">
         <div>
           <h1>Jaipur</h1>
           <Route exact path="/"
