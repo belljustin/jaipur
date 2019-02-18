@@ -3,7 +3,7 @@ const http = require('http');
 import Deck from './Deck';
 import Game from './Game';
 
-const PATH = '/jaipur';
+const PATH = '/';
 var games = new Map();
 
 const server = http.createServer();
@@ -15,7 +15,7 @@ const io = require('socket.io')(server, {
   cookie: false
 })
 
-server.listen(3001);
+server.listen(3030);
 console.log('Started websocket server on', server.address(), PATH);
 
 io.on('connection', function(socket) {
@@ -40,7 +40,7 @@ io.on('connection', function(socket) {
 
   socket.on('SELL_CARDS', (data) => {
     let game = games.get(data.gameId);
-    const sale = game.sellCards(socket.id, new Set(data.selectedCards));
+    const sale = game.sellCards(socket.id, data.selectedCards);
     updatePlayers(io, game);
     logSale(io, socket.id, data.gameId, sale.name, sale.num);
   });
@@ -48,8 +48,8 @@ io.on('connection', function(socket) {
   socket.on('TAKE_CARDS', (data) => {
     let game = games.get(data.gameId);
     const trade = game.tradeCards(socket.id,
-      new Set(data.selectedMarket),
-      new Set(data.selectedHand));
+      data.selectedMarket,
+      data.selectedHand);
     updatePlayers(io, game);
     logTrade(io, socket.id, data.gameId, trade.taken, trade.given);
   });

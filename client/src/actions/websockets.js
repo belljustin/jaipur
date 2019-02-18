@@ -1,7 +1,7 @@
 import io from 'socket.io-client';
 
-const uri = 'https://www.belljust.in';
-const path = '/jaipur/ws/';
+const uri = process.env.REACT_APP_SOCKET_URI;
+const path = process.env.REACT_APP_SOCKET_PATH;
 
 const socket = io(uri, {
   path: path,

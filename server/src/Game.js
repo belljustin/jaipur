@@ -53,8 +53,8 @@ class Player {
 class Game {
   constructor(id) {
     this.id = id;
-    this.tokens = initialTokens;
-    this.hiddenTokens = initialHiddenTokens;
+    this.tokens = Object.assign({}, initialTokens);
+    this.hiddenTokens = Object.assign({}, initialHiddenTokens);
     this.deck = new Deck();
     // TODO: put specials here
     this.market = this.deck.deal(MARKET_SIZE);
@@ -77,24 +77,24 @@ class Game {
   sellCards(playerId, selectedCards) {
     let player = this.getPlayer(playerId);
 
-    const i = selectedCards.values().next().value;
+    const i = selectedCards[0];
     const name = player.hand[i];
 
     const j = tokenType.findIndex(t => t === name);
     const purchasedTokens = this.tokens[j]
-      .slice(-selectedCards.size);
-    const hiddenTokens = this.getHiddenTokens(selectedCards.size);
+      .slice(-selectedCards.length);
+    const hiddenTokens = this.getHiddenTokens(selectedCards.length);
     const tokens = purchasedTokens.concat(hiddenTokens);
 
     player.sellCards(selectedCards);
     player.addPoints(tokens.reduce((acc, t) => acc += t));
-    this.tokens[j] = this.tokens[j].slice(0, -selectedCards.size);
+    this.tokens[j] = this.tokens[j].slice(0, -selectedCards.length);
 
     this.turn++;
 
     return {
       name,
-      num: selectedCards.size
+      num: selectedCards.length
     }
   }
 
