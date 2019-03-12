@@ -14,7 +14,7 @@ function reducer(state, action) {
   }
 
   if (action.type === LIST_GAMES) {
-    return Object.assign(state, {
+    return Object.assign({}, state, {
       games: action.games
     })
   }
