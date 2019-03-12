@@ -61,10 +61,13 @@ export class Validation {
       return false;
     }
 
-    // Check that all the sale cards are of the same type
+    // Check that all the sale cards are of the same type and not special
     let name = selectedHand[0];
     for (let c of selectedHand) {
       if (c !== name) {
+        return false;
+      }
+      if (c === 'acorn') {
         return false;
       }
     }
