@@ -63,6 +63,11 @@ class Game {
   }
 
   addPlayer(playerId) {
+    for (let i = 0; i < this.players.length; i++) {
+      if (this.players[i].id === playerId) {
+        return i + 1;
+      }
+    }
     if (this.players.length >= 2) {
       return -1;
     }
