@@ -8,9 +8,16 @@ resources:
 jobs:
 - name: build-jaipur-client
   public: true
-  inputs:
-  - name: jaipur
   plan:
   - get: jaipur
+    trigger: true
   - task: build-client
-    file: jaipur/client/ci/build_client.yml
+    file: jaipur/ci/build_client.yml
+
+- name: build-jaipur-server
+  public: true
+  plan:
+  - get: jaipur
+    trigger: true
+  - task: build-server
+    file: jaipur/ci/build_server.yml
