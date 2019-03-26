@@ -1,0 +1,14 @@
+resources:
+- name: jaipur
+  type: git
+  source:
+    uri: https://github.com/belljustin/jaipur.git
+    branch: master
+
+jobs:
+- name: build-jaipur-client
+  public: true
+  plan:
+  - get: jaipur
+  - task: build-client
+    file: jaipur/client/ci/build_client.yml
