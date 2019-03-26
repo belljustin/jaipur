@@ -8,6 +8,8 @@ resources:
 jobs:
 - name: build-jaipur-client
   public: true
+  inputs:
+  - name: jaipur
   plan:
   - get: jaipur
   - task: build-client

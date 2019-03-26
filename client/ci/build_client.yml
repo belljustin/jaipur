@@ -7,6 +7,16 @@ image_resource:
     repository: node
     tag: 11-alpine
 
+inputs:
+  - name: jaipur
+
 run:
-  path: echo
-  args: [hello world]
+  path: /bin/sh
+  args:
+    - -c
+    - |
+      echo "Node Version: $(node --version)"
+      echo "NPM Version: $(npm --version)"
+      cd jaipur/client
+      npm install
+      npm run build
