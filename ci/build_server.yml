@@ -20,7 +20,7 @@ run:
     - |
       echo "Node Version: $(node --version)"
       echo "NPM Version: $(npm --version)"
-      cd jaipur/server
-      npm install
-      npm run build
-      tar -cvf ../../jaipur-builds/release-0.0.1-server.tar.gz build/*
+      SERVERPATH=jaipur/server
+      npm install --prefix $SERVERPATH
+      npm run build --prefix $SERVERPATH
+      tar -cvf jaipur-builds/server-release-0.0.1.tar.gz $SERVERPATH/build/*

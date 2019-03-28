@@ -5,13 +5,20 @@ resource_types:
       repository: frodenas/gcs-resource
 
 resources:
-- name: release
+- name: client-release
   type: gcs-resource
   source:
     bucket: personal-site-170804.appspot.com
     json_key: |
       ((gcs-key.gcs-key))
-    regexp: jaipur-builds/release-(.*)-(.*).tar.gz
+    regexp: jaipur-builds/client-release-(.*).tar.gz
+- name: server-release
+  type: gcs-resource
+  source:
+    bucket: personal-site-170804.appspot.com
+    json_key: |
+      ((gcs-key.gcs-key))
+    regexp: jaipur-builds/server-release-(.*).tar.gz
 
 - name: jaipur
   type: git
@@ -27,9 +34,9 @@ jobs:
     trigger: true
   - task: build-client
     file: jaipur/ci/build_client.yml
-  - put: release
+  - put: client-release
     params:
-      file: jaipur-builds/release-0.0.1-client.tar.gz
+      file: jaipur-builds/client-release-0.0.1.tar.gz
       predefined_acl: publicRead
       content_type: application/octet-stream
 
@@ -40,8 +47,8 @@ jobs:
     trigger: true
   - task: build-server
     file: jaipur/ci/build_server.yml
-  - put: release
+  - put: server-release
     params:
-      file: jaipur-builds/release-0.0.1-server.tar.gz
+      file: jaipur-builds/server-release-0.0.1.tar.gz
       predefined_acl: publicRead
       content_type: application/octet-stream
