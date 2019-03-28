@@ -10,6 +10,9 @@ image_resource:
 inputs:
   - name: jaipur
 
+outputs:
+  - name: jaipur-builds
+
 run:
   path: /bin/sh
   args:
@@ -20,3 +23,4 @@ run:
       cd jaipur/client
       npm install
       npm run build
+      tar -cvf ../../jaipur-builds/release-0.0.1-client.tar.gz build/*

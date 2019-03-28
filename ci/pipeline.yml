@@ -1,4 +1,18 @@
+resource_types:
+  - name: gcs-resource
+    type: docker-image
+    source:
+      repository: frodenas/gcs-resource
+
 resources:
+- name: release
+  type: gcs-resource
+  source:
+    bucket: personal-site-170804.appspot.com
+    json_key: |
+      ((gcs-key.gcs-key))
+    regexp: jaipur-builds/release-(.*)-(.*).tar.gz
+
 - name: jaipur
   type: git
   source:
@@ -13,6 +27,11 @@ jobs:
     trigger: true
   - task: build-client
     file: jaipur/ci/build_client.yml
+  - put: release
+    params:
+      file: jaipur-builds/release-0.0.1-client.tar.gz
+      predefined_acl: publicRead
+      content_type: application/octet-stream
 
 - name: build-jaipur-server
   public: true
@@ -21,3 +40,8 @@ jobs:
     trigger: true
   - task: build-server
     file: jaipur/ci/build_server.yml
+  - put: release
+    params:
+      file: jaipur-builds/release-0.0.1-server.tar.gz
+      predefined_acl: publicRead
+      content_type: application/octet-stream
