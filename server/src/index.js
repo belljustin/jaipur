@@ -1,4 +1,4 @@
-const http = require('http');
+import http from 'http';
 
 import Deck from './Deck';
 import Game from './Game';
@@ -16,7 +16,7 @@ const io = require('socket.io')(server, {
 })
 
 server.listen(3030);
-console.log('Started websocket server on', server.address(), PATH);
+console.log('Starting websocket server on', server.address(), PATH);
 
 io.on('connection', function(socket) {
   console.log('client connected');
