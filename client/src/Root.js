@@ -9,6 +9,7 @@ import Lobby from './containers/Lobby'
 import './index.css';
 
 const Root = ({ store }) => {
+  console.log("Initializing...");
   return (
     <Provider store={store}>
       <Router basename="/jaipur">
